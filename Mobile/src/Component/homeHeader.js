@@ -8,7 +8,18 @@ const Header = (props) => {
     const navigation = useNavigation();
 
     return (
-        <View style={styles.nav}>             
+        <View style={styles.nav}>   
+            <TouchableWithoutFeedback
+                onPress={() =>{
+                    navigation.openDrawer();
+                }}
+            >
+                <Image  
+                    source={require('../assets/menu_icon.png')}
+                    style={{width:40,height:40}}
+                />
+            </TouchableWithoutFeedback>
+          
             <TouchableWithoutFeedback
                 onPress={() =>{
                     navigation.navigate('Search');
@@ -19,22 +30,8 @@ const Header = (props) => {
                     <FontAwesome name="search" size={25} color='#515051'  style={styles.inputIcon}/>  
                 </View>
             </TouchableWithoutFeedback>
-
-            <View style={{flexDirection:'row',justifyContent:'space-between'}}>
-                <CartButton />
-                
-                <TouchableWithoutFeedback
-                    onPress={() =>{
-                        navigation.openDrawer();
-                    }}
-                >
-                    <Image  
-                        source={require('../assets/menu-icon.png')}
-                        style={{width:30,height:30,marginLeft:20}}
-                    />
-                </TouchableWithoutFeedback>
-
-            </View>
+            
+            <CartButton />
         </View>
     );
 }

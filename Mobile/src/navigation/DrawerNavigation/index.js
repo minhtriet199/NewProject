@@ -24,7 +24,7 @@ const DrawerNavigation = () => {
                 drawerActiveBackgroundColor: '#5e72e4',
                 drawerActiveTintColor:'white',
                 itemStyle: { padding: 0 },
-                drawerPosition:'right'
+                // drawerPosition:'right'
             }}
             drawerContent={(props) => <DrawerContent {...props} />}
         >

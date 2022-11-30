@@ -8,7 +8,6 @@ const CartButton = (props) => {
         let totalQuantity = 0
         // cart.map((item) => {
         //   totalQuantity += item.quantity
-        //     totalQuantity = item.length;
         // })
         totalQuantity = cart.length;
         return { totalQuantity}

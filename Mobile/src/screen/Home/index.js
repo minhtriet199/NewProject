@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Text, View, StyleSheet, ScrollView, Image, TouchableWithoutFeedback, Dimensions, TouchableHighlight, TouchableOpacity } from 'react-native';
 import Header from '../../Component/homeHeader';
-import {Api_Url} from '../../api/CallApi';
 import callApi from '../../api/CallApi';
 import H3 from '../../Component/h3';
+import ProductCard from '../../Component/ProductCard';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import { useNavigation } from '@react-navigation/native';
 
 
 function Home(props) {
     const [Products, setProducts] = useState([]);
-    const navigation = useNavigation();
     useEffect(() => {
         callApi('api/product','GET',null)
         .then(function(response){       
@@ -37,30 +35,11 @@ function Home(props) {
                         </TouchableWithoutFeedback>
                     </View>
                     <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{marginTop:20}}>
-                            {Products.map((item) => {
-                                return(
-                                    <TouchableOpacity style={styles.productCard}
-                                        onPress={() =>
-                                            navigation.navigate('ProductDetail', {
-                                                itemId: item.id,
-                                                title: item.product_name,
-                                            })
-                                        }
-                                    >
-                                        <Image
-                                            style={{flex:1,height:250}}
-                                            source={{uri:Api_Url + item.thumb }}
-                                        />
-                                        <View style={styles.productTitle}>
-                                            <Text style={{fontWeight:'bold',fontSize:20, color:'white'}}>{item.product_name}</Text>
-                                            <View style={{flexDirection:'row',alignItems:'flex-start'}}>
-                                                <Text style={{fontWeight:'bold',fontSize:18, color:'white',}} >{item.price}đ</Text>
-                                            </View>
-                                        </View>
-                                        
-                                    </TouchableOpacity  >
-                                );
-                            })}        
+                        {Products.map((item,i) => {
+                            return(
+                                <ProductCard id={item.id} name={item.product_name} thumb={item.thumb} price={item.price} i={i} />
+                            );
+                        })}        
                     </ScrollView>  
                 </View>
                 <View style={styles.Box}>
@@ -86,26 +65,14 @@ function Home(props) {
                             <Text style={{fontWeight:'bold'}}>ALL</Text>
                         </View>
                     </ScrollView>
-                    </View>
-                    <View style={styles.ProductContaier}>
-                        {Products.map((item) => {
-                            return(
-                                <View style={styles.productCard}>
-                                    <Image
-                                        style={{flex:1,height:250}}
-                                        source={{uri:Api_Url + item.thumb }}
-                                    />
-                                    <View style={styles.productTitle}>
-                                        <Text style={{fontWeight:'bold',fontSize:20, color:'white'}}>{item.product_name}</Text>
-                                        <View style={{flexDirection:'row',alignItems:'flex-start'}}>
-                                            <Text style={{fontWeight:'bold',fontSize:18, color:'white',}} >{item.price}đ</Text>
-                                        </View>
-                                    </View>
-                                    
-                                </View>
-                            );
-                        })}        
-                    </View>
+                </View>
+                <View style={styles.ProductContaier}>
+                    {Products.map((item,i) => {
+                        return(
+                            <ProductCard id={item.id} name={item.product_name} thumb={item.thumb} price={item.price} i={i} />
+                        );
+                    })}        
+                </View>
                 
             </ScrollView>
         </View>
@@ -113,9 +80,6 @@ function Home(props) {
 }
 const {width} = Dimensions.get('screen');
 const styles = StyleSheet.create({
-    body:{
-        marginTop:80,
-    },
     bannerContainer:{
         width:'100%',
         alignItems:'center',
@@ -131,20 +95,6 @@ const styles = StyleSheet.create({
         backgroundColor:'white',
         paddingVertical:10,
         marginTop:20,
-    },
-    productCard:{
-        width:width/2.15,
-        marginHorizontal:5,
-        marginBottom:15,
-        overflow:'hidden',
-        borderRadius:5,
-        elevation:6
-    },
-    productTitle:{
-        width:'100%',
-        paddingHorizontal:15,
-        paddingVertical:5,
-        backgroundColor:'#202026',
     },
     pill:{
         flexDirection:'row',

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const Api_Url = 'http://192.168.1.240:8000';
+export const Api_Url = 'http://testing-env.eba-dubpwp2s.ap-northeast-1.elasticbeanstalk.com';
 
 export default function callApi(endPoint,method='GET',body){
     return axios({

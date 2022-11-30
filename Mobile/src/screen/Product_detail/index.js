@@ -1,17 +1,18 @@
-import React,{useState,useEffect, useRef, useCallback} from 'react';
+import React,{useState,useEffect, useRef} from 'react';
 import { Text, View,StyleSheet,Image, TouchableOpacity, Button, Dimensions, ScrollView } from 'react-native';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {increase,decrease} from '../../utils';
 import {addToCart} from '../../redux/Cart'
 import callApi,{Api_Url} from '../../api/CallApi';
 import H3 from '../../Component/h3';
 import H4 from '../../Component/h4';
-import BottomSheet,{BottomSheetView} from '@gorhom/bottom-sheet';
 
 const {width,height} = Dimensions.get('screen');
 function ProductDetail({route,props}) {
     const [data, setData] = useState([]);
+    const [selected,setSelected] = useState(1);
     const [Quantity,setQuantity] = useState(1);
+    const [Price,setPrice] = useState(0);
     const id = route.params.itemId;
     const dispatch = useDispatch();
     
@@ -19,15 +20,9 @@ function ProductDetail({route,props}) {
         callApi('api/product/show/'+ JSON.stringify(id),'GET',null)
         .then(function (response){
           setData(response.data)
+          setPrice(response.data.price.toFixed(3))
         })
     }, []);
-
-
-    const bottomSheetRef = useRef(null);
-    const snapPoints = ['50%'];
-    const openModal = () =>{
-        bottomSheetRef.current.present();
-    }
 
     return (
         <View style={styles.container}>
@@ -42,38 +37,52 @@ function ProductDetail({route,props}) {
                 <View style={styles.ProductInfo}>
                     <View style={styles.basicInfo}>
                         <H3 text={data.product_name}/>
-                        <H4 text={data.price + 'đ'}/>
-                    </View>
-                    <View style={styles.description}>
-                        <TouchableOpacity
-                            onPress={() => openModal()}
-                            style={{marginTop:15}}
-                        >
-                            <Text>
-                                Show Size Chart
-                            </Text>
-                        </TouchableOpacity>
+                        <H4 text={Price + ' đ'}/>
                     </View>
                     <View style={styles.sizeSelect}>
                         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} >
-                            <TouchableOpacity style={[styles.pill,styles.active]}>
-                                <Text style={[styles.active,{fontWeight:'bold'}]}>S</Text>
+                            <TouchableOpacity 
+                                onPress={() => setSelected(1)}
+                                style={[styles.pill,
+                                    selected === 1? styles.active : ''
+                                ]}
+                            >
+                                <Text style={[{fontWeight:'bold'},selected === 1 ? styles.activeFont : '']}>S</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.pill}>
-                                <Text style={{fontWeight:'bold'}}>M</Text>
+                            <TouchableOpacity 
+                                 onPress={() => setSelected(2)}
+                                 style={[styles.pill,
+                                     selected === 2? styles.active : ''
+                                 ]}
+                            >
+                                <Text style={[{fontWeight:'bold'},selected === 2 ? styles.activeFont : '']}>M</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.pill}>
-                                <Text style={{fontWeight:'bold'}}>L</Text>
+                            <TouchableOpacity 
+                                onPress={() => setSelected(3)}
+                                style={[styles.pill,
+                                    selected === 3? styles.active : ''
+                                ]}
+                            >
+                                <Text style={[{fontWeight:'bold'},selected === 3 ? styles.activeFont : '']}>L</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.pill}>
-                                <Text style={{fontWeight:'bold'}}>XL</Text>
+                            <TouchableOpacity 
+                                onPress={() => setSelected(4)}
+                                style={[styles.pill,
+                                    selected === 4 ? styles.active : ''
+                                ]}
+                            >
+                                <Text style={[{fontWeight:'bold'},selected === 4 ? styles.activeFont : '']}>XL</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.pill}>
-                                <Text style={{fontWeight:'bold'}}>XXL</Text>
+                            <TouchableOpacity 
+                                onPress={() => setSelected(5)}
+                                style={[styles.pill,
+                                    selected === 5 ? styles.active : ''
+                                ]}
+                            >
+                                <Text style={[{fontWeight:'bold'},selected === 5 ? styles.activeFont : '']}>XXL</Text>
                             </TouchableOpacity >
                         </ScrollView>
                     </View>
-                   
                 </View>
                 
             </ScrollView>
@@ -111,19 +120,6 @@ function ProductDetail({route,props}) {
                     </View>
                 </View> 
             </View>
-            <BottomSheet
-                ref={bottomSheetRef}
-                snapPoints={snapPoints}
-                enablePanDownToClose={true}
-                index={0}
-            >
-                <BottomSheetView style={{flex:1,alignItems:'center'}}>
-                    <Image 
-                        style={{width:width/1.5,height:300}}
-                        source={{uri:'http://192.168.1.240:8000/storage/image/size.png'}}
-                    />
-                </BottomSheetView>
-            </BottomSheet>
         </View>
 
     );
@@ -163,6 +159,8 @@ const styles = StyleSheet.create({
     },
     active:{
         backgroundColor:'black',
+    },
+    activeFont:{
         color:'white',
     },
     footer:{

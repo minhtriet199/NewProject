@@ -6,9 +6,11 @@ const CartButton = (props) => {
     const cart = useSelector((state) =>state.Cart.Carts);
     const getTotal = () => {
         let totalQuantity = 0
-        cart.map((item) => {
-          totalQuantity += item.quantity
-        })
+        // cart.map((item) => {
+        //   totalQuantity += item.quantity
+        //     totalQuantity = item.length;
+        // })
+        totalQuantity = cart.length;
         return { totalQuantity}
     }
     return (

@@ -42,11 +42,10 @@ const styles = StyleSheet.create({
         backgroundColor:'white',
         paddingHorizontal:15,
         paddingVertical:10,
+        marginBottom:10,
         flexDirection:'row',
         alignItems:'center',
         justifyContent:'space-between',
-        position:'absolute',
-        zIndex:1,
         elevation:20
     },
     title:{

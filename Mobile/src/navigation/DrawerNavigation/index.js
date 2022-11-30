@@ -33,9 +33,9 @@ const DrawerNavigation = () => {
                     headerShown:false,
                 }}
             />
-           {Catagorys.map((item) => {
+           {Catagorys.map((item,i) => {
                 return(
-                    <Drawer.Screen name={item.name} component={Catagory}
+                    <Drawer.Screen name={item.name} component={Catagory}  key={i} 
                         initialParams={{ id: item.id }}
                         options={{
                             headerShown:false,

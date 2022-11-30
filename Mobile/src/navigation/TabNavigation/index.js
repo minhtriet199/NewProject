@@ -9,7 +9,7 @@ const Tab= createBottomTabNavigator();
 const TabNavigation = () => {
     return (
         <Tab.Navigator>
-            <Tab.Screen name="DrawerNavigation" component={DrawerNavigation} 
+            <Tab.Screen name="Home" component={DrawerNavigation} 
                 options={{
                     tabBarIcon: ({focused}) => (
                         <Icon
@@ -19,7 +19,6 @@ const TabNavigation = () => {
                         />
                     ),
                     headerShown: false,
-                    tabBarShowLabel: false,
                 }}
             />
             <Tab.Screen name="Settings" component={Settings} 
@@ -31,8 +30,6 @@ const TabNavigation = () => {
                             color={focused ? '#5e72e4' : 'black'}
                         />
                     ),
-                    headerShown: false,
-                    tabBarShowLabel: false,
                 }}
             />
         </Tab.Navigator>

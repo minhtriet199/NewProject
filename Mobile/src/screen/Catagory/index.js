@@ -1,12 +1,43 @@
-import React from 'react';
-import { Text, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Text, View, StyleSheet } from 'react-native';
+import Header from '../../Component/homeHeader';
+import H3 from '../../Component/h3';
+import ProductCard from '../../Component/ProductCard';
+import callApi from '../../api/CallApi';
 
 function Catagory({ route,props}) {
+    const id = route.params.id;
+    const [Products, setProducts] = useState([]);
+    const [Catagory,setCatagory] = useState([]);
+    useEffect(() => {
+        callApi('api/catagory/'+ JSON.stringify(id),'GET',null)
+        .then(function(response){       
+            setProducts(response.data.product);
+            setCatagory(response.data.catagory);
+        })
+    }, []);
+
     return (
-        <View>
-            <Text>{route.params.id}</Text>
+        <View style={styles.container}>
+            <Header />
+            <View style={styles.ProductContaier}>
+                {Products.map((item) => {
+                    return(
+                        <ProductCard id={item.id} name={item.product_name} thumb={item.thumb} price={item.price} />
+                    );
+                })}      
+            </View>
         </View>
     );
 }
+const styles = StyleSheet.create({
+    ProductContaier:{
+        marginTop:20,
+        marginVertical:20,
+        flexDirection: 'row',
+        justifyContent:'space-between',
+        flexWrap: 'wrap',
+    }
+})
 
 export default Catagory;

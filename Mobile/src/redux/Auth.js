@@ -1,6 +1,6 @@
 const initialState = {
     isLogin: true,
-    userId:1,
+    userId:null,
 }
 
 export default function (state = initialState, action) {

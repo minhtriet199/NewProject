@@ -1,28 +1,33 @@
 import { DrawerContentScrollView, DrawerItem, DrawerItemList } from '@react-navigation/drawer';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
-import callApi from '../../../api/CallApi';
+import { SafeAreaView,StatusBar } from 'react-native';
+import Logo from '../../../Component/logo';
 
 
 const DrawerContent = (props) => {
    const dispatch = useDispatch();
     return (
-        <DrawerContentScrollView {...props}>
-            <DrawerItemList {...props} />
-           
-            <DrawerItem
-                label="SignOut"
-                icon={({ focused,color,size }) =>{
-                    return (
-                        <Ionicons name='exit-outline' size={20}/>
-                    )
-                }}  
-                onPress={()=>
-                    dispatch({type:'LOGOUT'})
-                }
-            />
-        </DrawerContentScrollView>
+        <SafeAreaView style={{flex: 1,paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0}}>
+            <Logo />
+            <DrawerContentScrollView {...props}>
+                <DrawerItemList {...props} />
+            
+                <DrawerItem
+                    label="SignOut"
+                    icon={({ focused,color,size }) =>{
+                        return (
+                            <Ionicons name='exit-outline' size={20}/>
+                        )
+                    }}  
+                    onPress={()=>
+                        dispatch({type:'LOGOUT'})
+                    }
+                />
+            </DrawerContentScrollView>
+        </SafeAreaView>
+       
     );
 }
 module.exports = DrawerContent;

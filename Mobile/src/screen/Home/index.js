@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Text, View, StyleSheet, ScrollView, Image, TouchableWithoutFeedback, Dimensions, TouchableHighlight, TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet, ScrollView, Image, TouchableWithoutFeedback, Dimensions, TouchableHighlight, TouchableOpacity, FlatList } from 'react-native';
 import Header from '../../Component/homeHeader';
 import callApi from '../../api/CallApi';
 import H3 from '../../Component/h3';
@@ -37,7 +37,7 @@ function Home(props) {
                     <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{marginTop:20}}>
                         {Products.map((item,i) => {
                             return(
-                                <ProductCard id={item.id} name={item.product_name} thumb={item.thumb} price={item.price} i={i} />
+                                <ProductCard id={item.id} name={item.product_name} thumb={item.thumb} price={item.price} i={item.id} />
                             );
                         })}        
                     </ScrollView>  
@@ -69,10 +69,16 @@ function Home(props) {
                 <View style={styles.ProductContaier}>
                     {Products.map((item,i) => {
                         return(
-                            <ProductCard id={item.id} name={item.product_name} thumb={item.thumb} price={item.price} i={i} />
+                            <ProductCard id={item.id} name={item.product_name} thumb={item.thumb} price={item.price} i={item.id} />
                         );
                     })}        
                 </View>
+                {/* <FlatList 
+                    data={Products}
+                    contentContainerStyle={styles.ProductContaier}
+                    renderItem={({ item }) => <ProductCard id={item.id} name={item.product_name} thumb={item.thumb} price={item.price} i={item.id}/>}
+                    keyExtractor={(item) => item.id}
+                /> */}
                 
             </ScrollView>
         </View>

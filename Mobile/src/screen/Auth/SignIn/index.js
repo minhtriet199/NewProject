@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { View,StyleSheet, Text, Dimensions, Image, TextInput, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Pressable, TouchableOpacity, Button, ScrollView } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import H1 from '../../../Component/h1';
 import Logo from '../../../Component/logo';
 import callApi from '../../../api/CallApi';
 import { useDispatch } from 'react-redux';

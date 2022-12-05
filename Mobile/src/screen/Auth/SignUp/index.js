@@ -76,6 +76,7 @@ function SignUp(props) {
                                         <FontAwesome name='eye-slash' size={20}/> }
                                     </TouchableOpacity>
                                 </View>
+
                                 <View style={{marginVertical:15}}>
                                     <Button 
                                         title='Sign Up'
@@ -110,7 +111,7 @@ function SignUp(props) {
                     
                 </ScrollView>
                 <View style={styles.footer}>
-                        <Text>Already have an account ? </Text>
+                        <Text>Already have an account ?</Text>
                         <TouchableOpacity 
                             onPress={() => { 
                                 navigation.navigate('SignIn')

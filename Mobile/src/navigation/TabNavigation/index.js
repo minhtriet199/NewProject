@@ -9,7 +9,7 @@ const Tab= createBottomTabNavigator();
 const TabNavigation = () => {
     return (
         <Tab.Navigator>
-            <Tab.Screen name="Home" component={DrawerNavigation} 
+            <Tab.Screen name="Main" component={DrawerNavigation} 
                 options={{
                     tabBarIcon: ({focused}) => (
                         <Icon

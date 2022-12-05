@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
         marginBottom:15,
         overflow:'hidden',
         borderRadius:5,
-        elevation:6
+        elevation:6,
     },
     productTitle:{
         width:'100%',

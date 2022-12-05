@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { TextInput, View, StyleSheet, TouchableOpacity, SafeAreaView, StatusBar, ScrollView, Image, Text, Dimensions } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -20,7 +20,7 @@ function Search(item) {
     }
     return (
         
-        <SafeAreaView style={{backgroundColor:'white',paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0}}>
+        <SafeAreaView style={{paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0}}>
             <View style={styles.header}>
                 <View >
                     <TouchableOpacity
@@ -33,6 +33,7 @@ function Search(item) {
                 </View>
                 <View style={styles.inputField}>
                     <TextInput
+                        autoFocus={true}
                         placeholder='Search'
                         width='70%'
                         value={Search}
@@ -45,30 +46,36 @@ function Search(item) {
                 <CartButton />
             </View>
             <ScrollView>
-                {Products.map((item) => {
-                    return(
-                        <TouchableOpacity 
-                            key={item.i} 
-                            style={styles.productCard}
-                            onPress={() =>
-                                navigation.navigate('ProductDetail', {
-                                    itemId: item.id,
-                                    title: item.name,
-                                })
-                            }
-                        >
-                            <Image
-                                style={{width:'30%',height:'100%'}}
-                                source={{uri:Api_Url + item.thumb }}
-                            />
-                            <View style={styles.productTitle}>
-                                <Text style={{fontWeight:'bold',fontSize:20}}>{item.product_name}</Text>
-                                <Text style={{fontWeight:'bold',fontSize:18}} >{item.price}.000 đ</Text>
-                            </View>
-                            
-                        </TouchableOpacity>
-                    );
-                })} 
+                {Products == '' ?
+                    <Text></Text>:
+                    <View style={styles.body}>
+                        {Products.map((item) => {
+                            return(
+                                <TouchableOpacity 
+                                    key={item.i} 
+                                    style={styles.productCard}
+                                    onPress={() =>
+                                        navigation.navigate('ProductDetail', {
+                                            itemId: item.id,
+                                            title: item.name,
+                                        })
+                                    }
+                                >
+                                    <Image
+                                        style={{width:'30%',height:'100%'}}
+                                        source={{uri:Api_Url + item.thumb }}
+                                    />
+                                    <View style={styles.productTitle}>
+                                        <Text style={{fontWeight:'bold',fontSize:20}}>{item.product_name}</Text>
+                                        <Text style={{fontWeight:'bold',fontSize:18}} >{item.price}.000 đ</Text>
+                                    </View>
+                                    
+                                </TouchableOpacity>
+                            );
+                        })}
+                    </View>
+                }
+               
             </ScrollView>
           
         </SafeAreaView>
@@ -107,6 +114,9 @@ const styles = StyleSheet.create({
         paddingHorizontal:15,
         paddingVertical:5,
     },
+    body:{
+        backgroundColor:"white",
+    }
 })
 
 export default Search;

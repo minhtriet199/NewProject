@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import SignIn from '../screen/Auth/SignIn';
 import SignUp from '../screen/Auth/SignUp';
 import ProductDetail from '../screen/Product_detail';
+import Cart from '../screen/Cart';
 import TabNavigation from './TabNavigation';
 import CartButton from '../Component/CartButton';
 import { View } from 'react-native';
@@ -32,10 +33,11 @@ function AuthNavigation(props) {
                                     ),
                                 })
                             }
-
                         />
                         <Stack.Screen name="Search" component={Search}
                             options={{  headerShown: false, }}
+                        />
+                        <Stack.Screen name="Cart" component={Cart}
                         />
                     </Stack.Navigator>
                 ):( 

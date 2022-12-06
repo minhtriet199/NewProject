@@ -9,7 +9,7 @@ function Cart({route,props}) {
     const [Products,setProducts] = useState([]);
 
     useEffect(() => {
-        carts.map((item) =>{
+        {carts.map((item) =>{
             callApi('api/product/show/'+ JSON.stringify(item.id),'GET',null)
             .then(function (response){
                 const product ={
@@ -21,7 +21,7 @@ function Cart({route,props}) {
                 }
                 Products.push(product);
             })
-        })
+        })}
         console.log(Products);
     }, []);
 

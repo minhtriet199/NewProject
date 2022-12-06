@@ -6,6 +6,7 @@ import {addToCart} from '../../redux/Cart'
 import callApi,{Api_Url} from '../../api/CallApi';
 import H3 from '../../Component/h3';
 import H4 from '../../Component/h4';
+import Toast from 'react-native-toast-message';
 
 const {width,height} = Dimensions.get('screen');
 function ProductDetail({route,props}) {
@@ -16,11 +17,21 @@ function ProductDetail({route,props}) {
     const id = route.params.itemId;
     const dispatch = useDispatch();
     
+    const addCart = () =>{
+        dispatch(addToCart({
+            id,Quantity
+        }))
+        Toast.show({
+            type: 'success',
+            text1: 'Success add product to cart',
+        });
+    }
+
     useEffect(() => {
         callApi('api/product/show/'+ JSON.stringify(id),'GET',null)
         .then(function (response){
-          setData(response.data)
-          setPrice(response.data.price.toFixed(3))
+            setData(response.data)
+            setPrice(response.data.price.toFixed(3))
         })
     }, []);
 
@@ -88,6 +99,11 @@ function ProductDetail({route,props}) {
             </ScrollView>
             
             <View style={styles.footer}>
+            <Toast 
+                position='bottom'
+                bottomOffset={100}
+                visibilityTime={2000}
+            />
                 <View style={styles.ProductInfo}>
                     <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}>
                         <View style={styles.amount}>
@@ -111,9 +127,7 @@ function ProductDetail({route,props}) {
                                 color='#5432d1'
                                 borderRadius="15"
                                 onPress={() =>
-                                    dispatch(addToCart({
-                                        id,Quantity
-                                    }))
+                                   addCart() 
                                 }
                             />
                         </View>

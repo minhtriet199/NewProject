@@ -24,7 +24,7 @@ const ProductCard = (props) => {
             <View style={styles.productTitle}>
                 <Text style={{fontWeight:'bold',fontSize:20, color:'white'}}>{props.name}</Text>
                 <View style={{flexDirection:'row',alignItems:'flex-start'}}>
-                    <Text style={{fontWeight:'bold',fontSize:18, color:'white',}} >{props.price.toFixed(3)} đ</Text>
+                    <Text style={{fontWeight:'bold',fontSize:18, color:'white',}} >{props.price}.000 đ</Text>
                 </View>
             </View>
             

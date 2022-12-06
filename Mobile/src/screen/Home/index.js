@@ -5,14 +5,16 @@ import callApi from '../../api/CallApi';
 import H3 from '../../Component/h3';
 import ProductCard from '../../Component/ProductCard';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-
+import Loading from '../../Component/Loading';
 
 function Home(props) {
     const [Products, setProducts] = useState([]);
+    const [isLoading,setisLoading] = useState(true);
     useEffect(() => {
         callApi('api/product','GET',null)
         .then(function(response){       
             setProducts(response.data);
+            setisLoading(false);
         })
     }, []);
 
@@ -34,13 +36,22 @@ function Home(props) {
                             </Text>
                         </TouchableWithoutFeedback>
                     </View>
-                    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{marginTop:20}}>
-                        {Products.map((item,i) => {
-                            return(
-                                <ProductCard id={item.id} name={item.product_name} thumb={item.thumb} price={item.price} i={item.id} />
-                            );
-                        })}        
-                    </ScrollView>  
+                    <View>
+                        {isLoading ?
+                            <Loading />
+                            : 
+                            <FlatList 
+                                contentContainerStyle={styles.topseller}
+                                data={Products}
+                                renderItem={({ item }) => {
+                                    return (
+                                        <ProductCard id={item.id} name={item.product_name} thumb={item.thumb} price={item.price} i={item.id}/>
+                                    )
+                                }}
+                                horizontal
+                            />
+                        }
+                    </View>
                 </View>
                 <View style={styles.Box}>
                     <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{marginTop:20,marginHorizontal:15}}>
@@ -66,19 +77,21 @@ function Home(props) {
                         </View>
                     </ScrollView>
                 </View>
-                <View style={styles.ProductContaier}>
-                    {Products.map((item,i) => {
-                        return(
-                            <ProductCard id={item.id} name={item.product_name} thumb={item.thumb} price={item.price} i={item.id} />
-                        );
-                    })}        
+                <View>
+                    {isLoading ?
+                        <Loading />
+                        :
+                        <FlatList 
+                            data={Products}
+                            renderItem={({ item }) => {
+                                return (
+                                    <ProductCard id={item.id} name={item.product_name} thumb={item.thumb} price={item.price} i={item.id}/>
+                                )
+                            }}
+                            numColumns={2}
+                        />
+                    }
                 </View>
-                {/* <FlatList 
-                    data={Products}
-                    contentContainerStyle={styles.ProductContaier}
-                    renderItem={({ item }) => <ProductCard id={item.id} name={item.product_name} thumb={item.thumb} price={item.price} i={item.id}/>}
-                    keyExtractor={(item) => item.id}
-                /> */}
                 
             </ScrollView>
         </View>
@@ -113,12 +126,8 @@ const styles = StyleSheet.create({
         borderWidth:1,
         borderRadius:30,
     },
-    ProductContaier:{
-        marginTop:20,
-        marginVertical:20,
-        flexDirection: 'row',
-        justifyContent:'space-between',
-        flexWrap: 'wrap',
+    topseller:{
+        marginTop:20
     }
 })
 

@@ -5,6 +5,7 @@ import Logo from '../../../Component/logo';
 import callApi from '../../../api/CallApi';
 import { useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
+import Toast from 'react-native-toast-message';
 
 function SignIn(props) {
     const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -15,7 +16,15 @@ function SignIn(props) {
     const dispatch = useDispatch();
     const navigation = useNavigation();
 
+
+    if(error!==null){
+        Toast.show({
+            type: 'error',
+            text1: error,
+        });
+    }
     const HandleSignIn = () =>{
+        
         if(email == null || password == null) return seterror('You need to fill all the field below');
         if(!reg.test(email)) return seterror('Invalid Email');
         const data={
@@ -29,7 +38,6 @@ function SignIn(props) {
                     type:'LOGIN',
                     payload: {user:response.data.user.id},
                 });
-                seterror('correct');
             }else{
                 seterror('Incorrect email or password');
             }
@@ -39,14 +47,15 @@ function SignIn(props) {
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={{height:'100%',  backgroundColor:'white',}}>
+            <Toast 
+                position='bottom'
+                bottomOffset={100}
+                visibilityTime={2000}
+            />
                 <View style={styles.main}>
                     <Logo />
                     <ScrollView>
                         <View style={styles.container}>
-                            {/* <H1 text='Sign-In'/> */}
-                            {error == null ? '' : 
-                                <Text style={styles.textError}>{error}</Text> 
-                            } 
                             <View style={styles.inputField}>
                                 <View style={styles.inputSection}>  
                                     <FontAwesome name='user' size={20}/>
@@ -167,9 +176,6 @@ const styles = StyleSheet.create({
         justifyContent:'center',
         flexDirection:'row',
     },
-    textError:{
-        color:'red'
-    }
 })
 
 export default SignIn;

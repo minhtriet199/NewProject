@@ -1,5 +1,5 @@
 const initialState = {
-    isLogin: true,
+    isLogin: false,
     userId:null,
 }
 

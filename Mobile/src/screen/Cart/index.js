@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { FlatList, Text, View, StyleSheet } from 'react-native';
 import { useSelector } from 'react-redux';
@@ -7,9 +8,9 @@ import ProductCard from '../../Component/ProductCard';
 function Cart({route,props}) {
     const carts = useSelector((state) =>state.Cart.Carts);
     const [Products,setProducts] = useState([]);
-
+    const [check,setCheck] = useState(false);
     useEffect(() => {
-        {carts.map((item) =>{
+        carts.map((item) =>{
             callApi('api/product/show/'+ JSON.stringify(item.id),'GET',null)
             .then(function (response){
                 const product ={
@@ -21,13 +22,13 @@ function Cart({route,props}) {
                 }
                 Products.push(product);
             })
-        })}
+
+        })
         console.log(Products);
-    }, []);
+    },[])
+
 
     return (
-        
-      
         <View >
             {Products == '' ?
                 <Text>Empty</Text>:

@@ -76,7 +76,7 @@ function SignIn(props) {
                                         />
                                     </View>
                                     
-                                    <TouchableOpacity onPress={ ()=>setHidePass(!hidePass) } >
+                                    <TouchableOpacity onPress={ ()=>setHidePass(!hidePass) }  style={{height:'100%',flex:1}}>
                                         {hidePass == true ? <FontAwesome name='eye' size={20}/> : 
                                         <FontAwesome name='eye-slash' size={20}/> }
                                     </TouchableOpacity>

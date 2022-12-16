@@ -18,4 +18,3 @@ Route::get('product',[ProductController::class,'index']);
 Route::get('product/show/{id}',[ProductController::class,'show']);
 Route::get('product/search/{name}',[ProductController::class,'search']);
 Route::get('catagory/{id}',[CatagoryController::class,'ProductByMenu']);
-

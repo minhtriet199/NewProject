@@ -25,7 +25,7 @@ return new class extends Migration
      *
      * @return void
      */
-    public Nfunction down()
+    public function down()
     {
         Schema::dropIfExists('catagories');
     }

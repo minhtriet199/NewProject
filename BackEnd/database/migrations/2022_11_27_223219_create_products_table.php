@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('product_name',255);
             $table->integer('price');
             $table->timestamps();
-            $table->foreign('menu_id')->references('id')->on('Catagories')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('menu_id')->references('id')->on('catagories')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

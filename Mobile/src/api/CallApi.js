@@ -9,4 +9,3 @@ export default function callApi(endPoint,method='GET',body){
         data:body
     })
 }
-//sasa
